@@ -9,18 +9,24 @@ TAM = 500
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 clock = pygame.time.Clock()
 triangles = [
+    #SOUTH
     [[-1,1,-1],[-1,-1,-1],[1,-1,-1]],
     [[-1,1,-1],[1,-1,-1],[1,1,-1]],
-    #[],
-    #[],
-    #[],
-    #[],
-    #[],
-    #[],
-    #[],
-    #[],
-    #[],
-    #[],
+    #NORTH
+    [[-1,1,1],[-1,-1,1],[1,-1,1]],
+    [[-1,1,1],[1,-1,1],[1,1,1]],
+    #RIGHT
+    [[1,1,-1],[1,-1,-1],[1,-1,1]],
+    [[1,1,-1],[1,-1,1],[1,1,1]],
+    #LEFT
+    [[-1,1,-1],[-1,-1,-1],[-1,-1,1]],
+    [[-1,1,-1],[-1,-1,1],[-1,1,1]],
+    #TOP
+    [[-1,-1,-1],[-1,-1,1],[1,-1,1]],
+    [[-1,-1,-1],[1,-1,1],[1,-1,-1]],
+    #BOTTOM
+    [[-1,1,-1],[-1,1,1],[1,1,1]],
+    [[-1,1,-1],[1,1,1],[1,1,-1]]
 ]
 run = True
 while(run):
@@ -41,8 +47,7 @@ while(run):
         [0,1,0],
         [-sin(0.01),0,cos(0.01)]
     ]
-    print('Originales')
-    print(triangles)
+
     #Rotacion de los triangulos
     rotatedTriangles = []
     for triangle in triangles:
@@ -54,8 +59,7 @@ while(run):
             rotVertice.append(dot(rotationY,tmp))
         rotatedTriangles.append(rotVertice)
     triangles = rotatedTriangles
-    print('Rotados')
-    print(triangles)
+
     
     #Traslacion de triangulos
     transformedTriangles = []
@@ -69,8 +73,6 @@ while(run):
             trasVertice.append(dot(traslation,tmp))
         transformedTriangles.append(trasVertice)
 
-    print('Trasladados:')
-    print(transformedTriangles)
 
     #Proyección de triangulos
     projectedTriangles = []
@@ -82,12 +84,11 @@ while(run):
             projectedVertice.append((x,y))
         projectedTriangles.append(projectedVertice)
 
-    print('Proyectados')
-    print(projectedTriangles)
-
     #Dibujo de triangulos
     for triangle in projectedTriangles:
-        pygame.draw.polygon(screen,(255,255,0),(
+        
+        col = (255,255,0)
+        pygame.draw.polygon(screen,col,(
             triangle[0],
             triangle[1],
             triangle[2]
