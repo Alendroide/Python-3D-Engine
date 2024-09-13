@@ -42,10 +42,20 @@ while(run):
         [0,0,1,6],
         [0,0,0,1]
     ]
+    rotationX = [
+        [1,0,0],
+        [0,cos(0.01),-sin(0.01)],
+        [0,sin(0.01),cos(0.01)]
+    ]
     rotationY = [
         [cos(0.01),0,sin(0.01)],
         [0,1,0],
         [-sin(0.01),0,cos(0.01)]
+    ]
+    rotationZ = [
+        [cos(0.02),-sin(0.02),0],
+        [sin(0.02),cos(0.02),0],
+        [0,0,1]
     ]
 
     #Rotacion de los triangulos
@@ -59,6 +69,19 @@ while(run):
             rotVertice.append(dot(rotationY,tmp))
         rotatedTriangles.append(rotVertice)
     triangles = rotatedTriangles
+
+    rotatedTriangles = []
+    for triangle in triangles:
+        rotVertice = []
+        for vertice in triangle:
+            tmp = []
+            for axis in vertice:
+                tmp.append(axis)
+            rotVertice.append(dot(rotationZ,tmp))
+        rotatedTriangles.append(rotVertice)
+    triangles = rotatedTriangles
+
+
 
     
     #Traslacion de triangulos
@@ -81,13 +104,13 @@ while(run):
         for vertice in triangle:
             x = (vertice[0]*TAM / vertice[2])+(WIDTH/2)
             y = (vertice[1]*TAM / vertice[2])+(HEIGHT/2)
+            z = vertice[2]
             projectedVertice.append((x,y))
         projectedTriangles.append(projectedVertice)
 
     #Dibujo de triangulos
     for triangle in projectedTriangles:
-        
-        col = (255,255,0)
+        col = (255,0,0)
         pygame.draw.polygon(screen,col,(
             triangle[0],
             triangle[1],
